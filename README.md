@@ -10,4 +10,11 @@ var username = "<mongo username>";
 var pass = "<mongo pass>";
 var dbName = "<db name>";
 ```
+_____________________________
+##Instructions##
+
+
+- Clone this repository. 
+- Zip all the files.
+- And upload the zip to  lambda
 
