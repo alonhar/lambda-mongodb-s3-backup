@@ -4,13 +4,13 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 
 var exec = require('child_process').exec;
+
+
 var bucketName= '<bucket Name>';
 var mongourl = "<mongo url with port>";
 var username = "<mongo username>";
 var pass = "<mongo pass>";
 var dbName = "<db name>";
-
-
 
 
 var zipFolder = require('zip-folder');
