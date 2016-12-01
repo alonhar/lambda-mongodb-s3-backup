@@ -1,4 +1,4 @@
-This is simple lambda function that use `mongodump` to backup mongodb database. 
+This is simple aws lambda function that use `mongodump` to backup mongodb database. 
 
 It zip's the file and upload it to S3 bucket.
 
@@ -16,5 +16,5 @@ _____________________________
 
 - Clone this repository. 
 - Zip all the files.
-- And upload the zip to  lambda
+- And upload the zip to  a new aws lambda
 
