@@ -1,4 +1,5 @@
-This is simple lambda function that use `mongodump` to backup mongodb database. It zip's the file and upload it to S3 bucket.
+This is simple lambda function that use `mongodump` to backup mongodb database. 
+It zip's the file and upload it to S3 bucket.
 
 `index.js` change this params:
 ```
