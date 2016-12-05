@@ -19,3 +19,10 @@ _____________________________
 - And upload the zip to  a new aws lambda (upload to s3 and then to the lambda, the file is to big to upload directly)
 - Add S3 Policy to the lambda role to give the lambda permission to write to s3.
 
+
+
+##Region##
+This lambda function compiled in EU (Ireland) AMI . 
+
+
+
