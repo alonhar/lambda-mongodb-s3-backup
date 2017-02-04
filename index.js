@@ -1,35 +1,38 @@
 'use strict';
 
-var AWS = require('aws-sdk');
-var fs = require('fs');
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const url = require('url');
 
-var exec = require('child_process').exec;
-
-
-var bucketName= '<bucket Name>';
-var mongourl = "<mongo url with port>";
-var username = "<mongo username>";
-var pass = "<mongo pass>";
-var dbName = "<db name>";
+const exec = require('child_process').exec;
 
 
-var zipFolder = require('zip-folder');
-var s3bucket = new AWS.S3({
-    params: {
-        Bucket: bucketName
-    }
+const mongoURI = process.env.MONGO_URL; //with port
+const s3Path = process.env.S3_PATH;
+const mongoURIparsed = url.parse(mongoURI);
+const host = mongoURIparsed.host;
+const username = mongoURIparsed.auth.split(':')[0];
+const pass = mongoURIparsed.auth.split(':')[1];
+const dbName = mongoURIparsed.path.split('/')[1];
+
+const zipFolder = require('zip-folder');
+const s3bucket = new AWS.S3({
+  params: {
+    Bucket: s3Path
+  }
 });
+
 module.exports.handler = function(event, context, cb) {
     process.env['PATH'] = process.env['PATH'] + ':' + process.env['LAMBDA_TASK_ROOT']
     console.log(process.env['PATH']);
-    var fileName = (new Date()).toDateString().replace(/ /g, "") +"_"+ (new Date()).getTime();
-    var folderName = '/tmp/' + fileName + "/"
-    exec('mongodump -h '+mongourl+' -d '+dbName+' -u '+username+' -p '+pass+' -o ' + folderName, (error, stdout, stderr) => {
+    let fileName = (new Date()).toDateString().replace(/ /g, "") +"_"+ (new Date()).getTime();
+    let folderName = '/tmp/' + fileName + "/"
+    exec('mongodump -h '+host+' -d '+dbName+' -u '+username+' -p '+pass+' -o ' + folderName, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return;
         }
-        var filePath = "/tmp/" + fileName + ".zip";
+        let filePath = "/tmp/" + fileName + ".zip";
 
         zipFolder(folderName, filePath, function(err) {
             if (err) {
@@ -38,7 +41,7 @@ module.exports.handler = function(event, context, cb) {
                 console.log('EXCELLENT');
                 fs.readFile(filePath, function(err, data) {
                     s3bucket.createBucket(function() {
-                        var params = {
+                        let params = {
                             Key: fileName, 
                             Body: data
                         };

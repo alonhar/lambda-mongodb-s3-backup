@@ -1,15 +1,14 @@
-This is simple aws lambda function that use `mongodump` to backup mongodb database. 
+This is simple aws lambda function that uses `mongodump` to backup mongodb database. 
 
-It zip's the file and upload it to S3 bucket.
+It zips the file and uploads it to an S3 bucket.
 
-`index.js` change this params:
+Use the following environment variables in your Lambda setup:
+
 ```
-var bucketName= '<bucket Name>';
-var mongourl = "<mongo url with port>";
-var username = "<mongo username>";
-var pass = "<mongo pass>";
-var dbName = "<db name>";
+MONGO_URL = mongodb://<user>:<password>@<host>:<port>/<database>
+S3_PATH = <s3bucket>/<folder>/...etc
 ```
+
 _____________________________
 ##Instructions##
 
@@ -17,7 +16,7 @@ _____________________________
 - Clone this repository. 
 - Run - npm install.
 - Zip all the files.
-- And upload the zip to  a new aws lambda (upload to s3 and then to the lambda, the file is to big to upload directly)
+- Upload the zip to  a new aws lambda (upload to s3 and then to the lambda, the file is to big to upload directly)
 - Add S3 Policy to the lambda role to give the lambda permission to write to s3.
 
 
