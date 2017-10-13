@@ -11,7 +11,7 @@ S3_PATH = <s3bucket>/<folder>/...etc
 
 _____________________________
 
-### Instructions ###
+## Instructions ##
 
 
 - Clone this repository. 
@@ -22,7 +22,7 @@ _____________________________
 
 
 
-## Region ##
+#### Region ####
 This lambda function compiled in EU (Ireland) AMI . 
 
 
