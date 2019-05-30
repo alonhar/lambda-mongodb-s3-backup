@@ -1,0 +1,25 @@
+service: lambda-mongodb-s3-backup
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-west-1
+  timeout: 30
+  memorySize: 512
+  stage: dev
+
+  environment:
+    MONGO_URL: ${env:MONGO_URL}
+    S3_PATH: ${env:S3_PATH}
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*Object"
+      Resource:
+        - "arn:aws:s3:::${env:S3_PATH}/*"
+functions:
+  createBackup:
+    handler: index.handler
+    events:
+      - schedule: rate(2 hours) # Runs a backup every 2 hours. https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
