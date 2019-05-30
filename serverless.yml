@@ -22,4 +22,4 @@ functions:
   createBackup:
     handler: index.handler
     events:
-      - schedule: cron(* 0/2 * * ? *) # Runs a backup every 2 hours. https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
+      - schedule: rate(2 hours) # Runs a backup every 2 hours. https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
