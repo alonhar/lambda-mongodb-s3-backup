@@ -1,29 +1,29 @@
-This is simple aws lambda function that uses `mongodump` to backup mongodb database. 
+This is a simple AWS Lambda function that uses `mongodump` to backup a MongoDB database to S3. 
+It uses [Serverless](https://serverless.com/) to zip up the directory and deploy to AWS.
 
-It zips the file and uploads it to an S3 bucket.
+## Deployment instructions ##
 
-Use the following environment variables in your Lambda setup:
-
+Create a `.env` file in the root directory and add the following environment variables:
 ```
-MONGO_URL = mongodb://<user>:<password>@<host>:<port>/<database>
-S3_PATH = <s3bucket>/<folder>/...etc
+export MONGO_URL = mongodb://<user>:<password>@<host>:<port>/<database>
+export S3_PATH = <s3bucket>/<folder>/...etc
 ```
 
+Source the environment file so Serverless can access the values:
+```
+. ./.env
+```
+
+Deploy the lambda function with Serverless:
+```
+serverless deploy --aws-profile profilename
+```
+Your function is now deployed and will run every 2 hours. Change the execution frequency in `serverless.yml`.
 _____________________________
 
-## Instructions ##
 
-
-- Clone this repository. 
-- Run - npm install.
-- Zip all the files.
-- Upload the zip to  a new aws lambda (upload to s3 and then to the lambda, the file is to big to upload directly)
-- Add S3 Policy to the lambda role to give the lambda permission to write to s3.
-
-
-
-#### Region ####
-This lambda function compiled in EU (Ireland) AMI . 
+## Lambda configuration ##
+The `serverless.yml` file contains a set of default configuration for the lambda. You can change these settings to fit your needs.
 
 
 
